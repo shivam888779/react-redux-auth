@@ -122,7 +122,7 @@ useEffect(()=>{
               label="User Name"
               name="username"
               autoComplete="username"
-              helperText={!isUserNameValid ? "please enter a valid usename" : ""}
+              helperText={!isUserNameValid ? "please enter a valid username" : ""}
               autoFocus
             />
             <TextField
@@ -147,7 +147,7 @@ useEffect(()=>{
             <Button
               type="submit"
               fullWidth
-              disabled = {(localStorage.getItem('token') || tasks.token)}
+              disabled = {(localStorage.getItem('token') || tasks.token ||tasks.logInError)}
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
