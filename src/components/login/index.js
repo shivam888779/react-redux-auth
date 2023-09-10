@@ -11,6 +11,7 @@ import {
   Grid,
   Typography,
   Alert,
+  CircularProgress,
 } from "@mui/material";
 import { LockOutlined } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,11 +25,13 @@ export default function SignInSide() {
 
   const [isUserNameValid, setisUserNameValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setisUserNameValid(true);
     setIsPasswordValid(true);
+   
     if (tasks.username === "") {
       setisUserNameValid(false);
     }
@@ -36,7 +39,7 @@ export default function SignInSide() {
       setIsPasswordValid(false);
     }
     if (!(tasks.username === " " || tasks.password.length < 5)) {
-      
+      setLoading(true)
       fetch("https://dummyjson.com/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -46,7 +49,7 @@ export default function SignInSide() {
         }),
       })
         .then((res) => res.json())
-        .then((data) => dispatch(addDetails({ ...data })));
+        .then((data) =>{ setLoading(false); dispatch(addDetails({ ...data }))});
 
     }
   };
@@ -151,7 +154,7 @@ useEffect(()=>{
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+            { loading?<CircularProgress />:"Sign In"}
             </Button>
             {tasks.logInError && <Alert severity="error">Unable to LogIn Please Check UserName and Password</Alert>}
             {(localStorage.getItem('token') || tasks.token) && <Alert severity="success">you have successfully logged in</Alert>}
