@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import authState from '../constant/authstate';
 
 const initialState = {
-
   "name" :"",
   "isLoggedIn": false,
   "phoneNo":"74858",
@@ -17,10 +17,10 @@ const initialState = {
     "token": "",
     "logInError":false,
     "remember": false
-
-
-  
+ 
 };
+
+console.log(authState,initialState)
 
 const authSlice = createSlice({
   name: 'auth',
@@ -29,15 +29,15 @@ const authSlice = createSlice({
     addDetails: (state, action) => {
       console.log(action.payload)
       Object.entries(action.payload).map(([key,value])=>{
-        console.log(key,value)
-
         if(value === "Invalid credentials")
         {
           state.logInError = true;
+          state.isLoggedIn = true; 
         }
         else{
         state[key] =  value;
         state.logInError = false;
+        
         }
 
       })

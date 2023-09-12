@@ -23,6 +23,8 @@ export default function SignInSide() {
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.auth);
 
+  console.log(tasks)
+
   const [isUserNameValid, setisUserNameValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -49,16 +51,13 @@ export default function SignInSide() {
         }),
       })
         .then((res) => res.json())
-        .then((data) =>{ setLoading(false); dispatch(addDetails({ ...data }))});
+        .then((data) =>{ setLoading(false); dispatch(addDetails({ ...data ,isLoggedIn : true }))});
 
     }
   };
 
 useEffect(()=>{
-  if(tasks.remember)
-  {
-     localStorage.setItem('token',localStorage.getItem('token')?localStorage.getItem('token'):tasks.token)
-  }
+  localStorage.setItem('token',localStorage.getItem('token')?localStorage.getItem('token'):tasks.token)
 },[handleSubmit])
 
   const handleOnchange = (e) => {

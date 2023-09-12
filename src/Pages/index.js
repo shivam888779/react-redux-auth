@@ -1,2 +1,3 @@
 import Home from "./home";
-export {Home}
+import Dashboard from "./dashboard";
+export {Home,Dashboard}
